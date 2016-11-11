@@ -46,7 +46,7 @@ void motors_set(int motor1p1, int motor1p2, int motor2p1, int motor2p2,int enabl
 
 	motor1Pin1 = motor1p1;
 	motor1Pin2 = motor1p2;
-	motor2Pin1 = motor2p2;
+	motor2Pin1 = motor2p1;
 	motor2Pin2 = motor2p2;
 	enablePin = enablep1;
 	enablePin2 = enablep2;
