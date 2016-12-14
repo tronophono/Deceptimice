@@ -8,12 +8,13 @@ void ir_read(int ir1Pin);
 void setupMPU();
 void recordAccelRegisters();
 void recordGyroRegisters();
-void encoder_read(int encoder0PA, int encoder0PB);
-void doEncoderA();
-void doEncoderB();
-void motors_set(int motor1p1, int motor1p2, int motor2p1, int motor2p2,
-		int enablep1, int enablep2);
-
+void encoder_ReadRight( int encoder0PA, int encoder0PB);
+void encoder_ReadLeft( int encoder1PA, int encoder1PB);
+void doEncoderRightA();
+void doEncoderRightB();
+void doEncoderLeftA();
+void doEncoderLeftB();
+void motors_set(int motor1p1, int motor1p2, int motor2p1, int motor2p2,int enablep1,int enablep2);
 void left_turn();
 void right_turn();
 void backward();
