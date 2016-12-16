@@ -4,7 +4,7 @@
 #ifndef MOTORS_H_
 #define MOTORS_H_
 
-void ir_read(int ir1Pin);
+float ir_read(int ir1Pin);
 void setupMPU();
 void recordAccelRegisters();
 void recordGyroRegisters();
@@ -23,4 +23,5 @@ void forward();
 void button_set(int left, int right, int back, int forw, int stps);
 void stop_it();
 void print();
+void printr();
 #endif /* MOTORS_H_ */

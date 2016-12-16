@@ -36,7 +36,7 @@ long accelX, accelY, accelZ;
 float gForceX, gForceY, gForceZ;
 
 long gyroX, gyroY, gyroZ;
-float rotX, rotY, rotZ, angle;
+float rotX, rotY, rotZ, angle, average;
 
 //--------------------------------------------------------
 
@@ -265,13 +265,15 @@ void recordGyroRegisters() {
 	gyroX = Wire.read() << 8 | Wire.read(); //Store first two bytes into accelX
 	gyroY = Wire.read() << 8 | Wire.read(); //Store middle two bytes into accelY
 	gyroZ = Wire.read() << 8 | Wire.read(); //Store last two bytes into accelZ
+
 	rotX = gyroX / 131.0;
 	rotY = gyroY / 131.0;
 	rotZ = gyroZ / 131.0;
-	gForceX = accelX / 16384.0;
-	gForceY = accelY / 16384.0;
-	gForceZ = accelZ / 16384.0;
 	angle += rotZ / 16 + 0.038;
+	for (int i = 0; i < 10; i++) {
+		average += angle;
+	}
+	average /= 10;
 }
 
 //Function for the infrared sensor
@@ -280,22 +282,14 @@ void recordGyroRegisters() {
  * 
  * The printing of values takes place here
  */
-void ir_read(int ir1Pin) {
+float ir_read(int ir1Pin) {
 	ir1Pin1 = ir1Pin;
 	for (int i; i < 1000; i++) {
 
 		result += analogRead(ir1Pin1);
 	}
 	result /= 1000;
-	if (result >= 1000) {
-		stop_it();
-		encoder0PosRight = 0;
-	}
-	if (abs(angle) >= 400) {
-		stop_it();
-		angle = 0;
-	}
-
+	return result;
 }
 
 //The following is writing an analog signal to the motors to move at a certain direction
@@ -347,19 +341,59 @@ void stop_it() {
 	analogWrite(motor2Pin2, 0);
 }
 
-void print() {
+//Use encoders for 90 degree turns for now.
 
+void print() {
+	Serial.print("IR_sensor:");
+	Serial.print(result);
+	Serial.print(" encoderRight:");
+	Serial.print(encoder0PosRight, DEC);
+	Serial.print(" encoderLeft:");
+	Serial.print(encoder0PosLeft, DEC);
+	Serial.print(" Gyro (deg)");
+	Serial.print(" X=");
+	Serial.print(rotX);
+	Serial.print(" Y=");
+	Serial.print(rotY);
+	Serial.print(" Z=");
+	Serial.print(rotZ);
+	Serial.print(" Angle=");
+	Serial.println(angle);
+	Serial.print(" Average=");
+	Serial.print(average);
 }
 
 void turn90_right() {
 
+	while(average <= 30)
+	{
+		right_turn();
+	}
+
+	stop_it();
 }
 
 void turn90_left() {
+	while(average <= 30)
+		{
+			left_turn();
+		}
+
+		stop_it();
 
 }
 
 void turn180() {
+	while(average <= 60)
+		{
+			right_turn();
+		}
 
+		stop_it();
 }
 
+
+void printr()
+{
+	Serial.print("Fuckyou");
+}
