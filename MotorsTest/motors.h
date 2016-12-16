@@ -22,4 +22,5 @@ void backward();
 void forward();
 void button_set(int left, int right, int back, int forw, int stps);
 void stop_it();
+void print();
 #endif /* MOTORS_H_ */
