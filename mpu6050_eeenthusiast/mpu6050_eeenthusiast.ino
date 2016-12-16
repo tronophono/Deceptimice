@@ -90,9 +90,6 @@ void processGyroData() {
   rotX = gyroX / 131.0;
   rotY = gyroY / 131.0; 
   rotZ = gyroZ / 131.0;
-  gForceX = accelX / 16384.0;
-  gForceY = accelY / 16384.0; 
-  gForceZ = accelZ / 16384.0;
   angle += rotZ/16+0.038;
   for ( int i=0;i<10;i++){
     average += angle;
