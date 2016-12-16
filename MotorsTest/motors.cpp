@@ -282,14 +282,33 @@ void recordGyroRegisters() {
  * 
  * The printing of values takes place here
  */
-float ir_read(int ir1Pin) {
+void ir_read(int ir1Pin) {
 	ir1Pin1 = ir1Pin;
+
 	for (int i; i < 1000; i++) {
 
 		result += analogRead(ir1Pin1);
 	}
 	result /= 1000;
-	return result;
+
+	Serial.print("IR_sensor:");
+	Serial.print(result);
+	Serial.print(" encoderRight:");
+	Serial.print(encoder0PosRight, DEC);
+	Serial.print(" encoderLeft:");
+	Serial.print(encoder0PosLeft, DEC);
+	Serial.print(" Gyro (deg)");
+	Serial.print(" X=");
+	Serial.print(rotX);
+	Serial.print(" Y=");
+	Serial.print(rotY);
+	Serial.print(" Z=");
+	Serial.print(rotZ);
+	Serial.print(" Angle=");
+	Serial.print(angle);
+	Serial.print(" Average=");
+	Serial.println(average);
+//	return result;
 }
 
 //The following is writing an analog signal to the motors to move at a certain direction
@@ -344,23 +363,7 @@ void stop_it() {
 //Use encoders for 90 degree turns for now.
 
 void print() {
-	Serial.print("IR_sensor:");
-	Serial.print(result);
-	Serial.print(" encoderRight:");
-	Serial.print(encoder0PosRight, DEC);
-	Serial.print(" encoderLeft:");
-	Serial.print(encoder0PosLeft, DEC);
-	Serial.print(" Gyro (deg)");
-	Serial.print(" X=");
-	Serial.print(rotX);
-	Serial.print(" Y=");
-	Serial.print(rotY);
-	Serial.print(" Z=");
-	Serial.print(rotZ);
-	Serial.print(" Angle=");
-	Serial.println(angle);
-	Serial.print(" Average=");
-	Serial.print(average);
+
 }
 
 void turn90_right() {
@@ -395,5 +398,5 @@ void turn180() {
 
 void printr()
 {
-	Serial.print("Fuckyou");
+	Serial.print(" Andrew has cookies ");
 }
