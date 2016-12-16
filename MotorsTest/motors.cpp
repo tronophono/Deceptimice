@@ -296,22 +296,6 @@ void ir_read(int ir1Pin) {
 		angle = 0;
 	}
 
-	 Serial.print("IR_sensor:");
-	 Serial.print(result);
-	 Serial.print(" encoderRight:");
-	 Serial.print(encoder0PosRight, DEC);
-	 Serial.print(" encoderLeft:");
-	 Serial.print(encoder0PosLeft, DEC);
-	 Serial.print(" Gyro (deg)");
-	 Serial.print(" X=");
-	 Serial.print(rotX);
-	 Serial.print(" Y=");
-	 Serial.print(rotY);
-	 Serial.print(" Z=");
-	 Serial.print(rotZ);
-	 Serial.print(" Angle=");
-	 Serial.println(angle);
-
 }
 
 //The following is writing an analog signal to the motors to move at a certain direction
