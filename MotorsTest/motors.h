@@ -4,7 +4,7 @@
 #ifndef MOTORS_H_
 #define MOTORS_H_
 
-float ir_read(int ir1Pin);
+void ir_read(int ir1Pin);
 void setupMPU();
 void recordAccelRegisters();
 void recordGyroRegisters();
