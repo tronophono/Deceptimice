@@ -7,12 +7,12 @@
 
 #include "Dispatch.h"
 
-int irValues[6];
+int irValues[3];
 int gyroReading;
-int calibrateArray[6];
+int calibrateArray[3];
 int irArray[2][1];
 
-
+//probably will be changed because our IR sensors are not the same as Micromau5 (
 Dispatch::Dispatch(int front_ir, int left_ir, int right_ir, int front_in,
 		int left_in, int right_in) {
 	pinMode(front_ir, OUTPUT);
@@ -47,44 +47,42 @@ int Dispatch::mapCoords(int y, int x) {
 	return returnVal;
 }
 
-void Dispatch::powerUp(int ledPin)
-{
+void Dispatch::powerUp(int ledPin) {
 	digitalWrite(ledPin, HIGH);
 }
 
-void Dispatch::powerDown(int ledPin)
-{
+void Dispatch::powerDown(int ledPin) {
 	digitalWrite(ledPin, LOW);
 }
 
-int Dispatch::getAverage(int ledPin, int y, int x)
-{
+int Dispatch::getAverage(int ledPin, int y, int x) {
 	int runningTally = 0;
-	for (int a=0; a<10; a++)
-	{
+	for (int a = 0; a < 10; a++) {
 		Dispatch::powerUp(ledPin);
 		delayMicroseconds(80);
-		Dispatch::readSensor(y,x);
-		runningTally += irValues[Dispatch::mapCoords(y,x)];
+		Dispatch::readSensor(y, x);
+		runningTally += irValues[Dispatch::mapCoords(y, x)];
 		Dispatch::powerDown(ledPin);
 		delayMicroseconds(80);
 	}
-	int avgTally = runningTally/10;
+	int avgTally = runningTally / 10;
 	return avgTally;
 }
 
-int Dispatch::getValue(int index)
-{
-	int value = irValues[index]-calibratedArray[index];
-	if(value<0){value=0;}
+int Dispatch::getValue(int index) {
+	int value = irValues[index] - calibratedArray[index];
+	if (value < 0) {
+		value = 0;
+	}
 	return value;
 }
 
 //Going to have to modift for limited IR
-void Dispatch::calibrateSensors(){
-	for (int i = 0; i <3; i++){
-		for (int j=i; j<3; j++){
-			calibratedArray[Dispatch::mapCoords(i,j)] = Dispatch::getAverage(irArray[i][0],i,j);
+void Dispatch::calibrateSensors() {
+	for (int i = 0; i < 3; i++) {
+		for (int j = i; j < 3; j++) {
+			calibratedArray[Dispatch::mapCoords(i, j)] = Dispatch::getAverage(
+					irArray[i][0], i, j);
 		}
 	}
 }

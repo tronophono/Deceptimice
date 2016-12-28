@@ -8,8 +8,8 @@
 #include "Arduino.h"
 #include "/home/lasantos/GeneralWorkspace/MicromouseProject/Furios7-Libraries/GyroAccel/GyroAccel.h"
 
-#ifndef FURIOS7_LIBRARIES_Dispatch_Dispatch_H_
-#define FURIOS7_LIBRARIES_Dispatch_Dispatch_H_
+#ifndef FURIOS7_LIBRARIES_DISPATCH_DISPATCH_H_
+#define FURIOS7_LIBRARIES_DISPATCH_DISPATCH_H_
 
 class Dispatch {
 public:
