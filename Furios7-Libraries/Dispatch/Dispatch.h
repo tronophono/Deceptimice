@@ -16,7 +16,7 @@ public:
 
 	Dispatch(int front_ir, int left_ir, int right_ir, int front_in, int left_in,int right_in);
 	void readSensor(int y, int x);
-	void powerUp(int ledPin); //Uss if want led as indicator
+	void powerUp(int y, int x,int ledPin); //Uss if want led as indicator
 	void powerDown(int ledPin);
 	void calibrateSensors();
 	int mapCoords(int y, int x);
