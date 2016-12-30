@@ -4,11 +4,31 @@
  *  Created on: Dec 21, 2016
  *      Author: lasantos
  */
+/*
+ * This library lets us read values from the MPU device that has both an accelerometer and a gyroscope integrated in one chip.
+ * The code is a bit more complicated because it involves using the registers inside the MPU device, which involves some addresses.
+ *
+ * This code is from http://eeenthusiast.com/arduino-accelerometer-gyroscope-tutorial-mpu-6050/
+ *
+ * It is free to use, however if you want to learn more about programming devices like these you will need to reference
+ * their respective data sheet.
+ *
+ * Device : MPU-6050
+ * Data Sheet: https://www.invensense.com/wp-content/uploads/2015/02/MPU-6000-Datasheet1.pdf
+ *
+ *
+ * Since the code has been made already we will use it and tweak it to meet our specifications when needed.
+ *
+ */
+
+
+
 
 #include "GyroAccel.h"
 #include "Arduino.h"
-#include <Wire.h>
+#include <Wire.h>	//used for I2C (I squared C), a communication protocol like bluetooth.
 
+//variables to store the values from the MPU.
 long accelX = 0;
 long accelY = 0;
 long accelZ = 0;
@@ -24,6 +44,12 @@ float rotZ = 0;
 float angle = 0;
 float average = 0;
 
+/*This constructor will set up the MPU device.
+ *
+ * ex:
+ *
+ * 		GyroAccel gyro; //this sets up the device automatically because the constructor is executed even without a parameter
+ */
 GyroAccel::GyroAccel(void) {
 
 	Wire.beginTransmission(0b1101000); //This is the I2C address of the MPU (b1101000/b1101001 for AC0 low/high datasheet sec. 9.2)
@@ -41,6 +67,7 @@ GyroAccel::GyroAccel(void) {
 
 }
 
+//functions to read accelerometer values
 void GyroAccel::recordAccelRegisters() {
 	Wire.beginTransmission(0b1101000); //I2C address of the MPU
 	Wire.write(0x3B); //Starting register for Accel Readings
@@ -56,6 +83,7 @@ void GyroAccel::recordAccelRegisters() {
 	gForceZ = accelZ / 16384.0;
 }
 
+//read gyroscope's values
 void GyroAccel::recordGyroRegisters() {
 	Wire.beginTransmission(0b1101000); //I2C address of the MPU
 	Wire.write(0x43); //Starting register for Gyro Readings
@@ -77,8 +105,8 @@ void GyroAccel::recordGyroRegisters() {
 	average /= 10;
 }
 
-
-void GyroAccel::printgyro(){
+//print the values of the gyroscope using Serial, which is used to communicate with our computer
+void GyroAccel::printgyro() {
 	Serial.print(" Gyro (deg)");
 	Serial.print(" X=");
 	Serial.print(rotX);
@@ -93,6 +121,13 @@ void GyroAccel::printgyro(){
 
 }
 
-/*void GyroAccel::printaccel(){
+//print the values of the gyroscope.
+void GyroAccel::printaccel() {
+	Serial.print(" gForceX=");
+	Serial.print(gForceX);
+	Serial.print(" gForceY=");
+	Serial.print(gForceY);
+	Serial.print(" gForceZ=");
+	Serial.println(gForceZ);
 
-}*/
+}

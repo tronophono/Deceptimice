@@ -1,3 +1,9 @@
+/*
+ * This library sets up the motors of the mouse and has turn functions
+ */
+
+
+
 #include "Arduino.h"
 #include "Motors.h"
 #include "EnableInterrupt.h"
