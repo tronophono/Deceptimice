@@ -6,14 +6,30 @@
 
 
 
-
-#include "/home/lasantos/GeneralWorkspace/MicromouseProject/Furios7-Libraries/Motors/Motors.h"    //This library will contain the motors_set and button_set functions
+//I include it these way to keep the libraries in organized folders, but you can change it depending on how you have it in your system.
+#include "/home/lasantos/GeneralWorkspace/MicromouseProject/Furios7-Libraries/Motors/Motors.h"
 #include "/home/lasantos/Desktop/Micromouse/Furios7-Micromouse/Furios7-Libraries/Dispatch/Dispatch.h"
 #include "/home/lasantos/Desktop/Micromouse/Furios7-Micromouse/Furios7-Libraries/GyroAccel/GyroAccel.h"
+/*
+ * Instead of these long includes you can move the respective files to the same folder and use
+ *
+ * #include "Dispatch.h"
+ * #include "Motors.h"
+ * #include "GyroAccel.h"
+ *
+ *
+ * if you are confused on how this is done I will show how in the next meeting.
+ *
+ *
+ */
 
 
 
 
+
+
+
+//reserved for the motors
 /*int MOTOR1PIN1 = 11;
  int MOTOR1PIN2 = 12;
  int MOTOR2PIN1 = 9;
