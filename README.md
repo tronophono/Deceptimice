@@ -12,7 +12,7 @@ as long as you have arduino.h as one of your include.
 
 
 
-<h3>Log<h3>
+<h3>Log</h3>
 
 The <b>Maze</b> folder under <i>Furios7-Libraries</i> is still being worked on. So far it only has some header
 files that have a struct inside of them which will be used to store cordinates and instructions.
