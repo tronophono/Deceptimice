@@ -22,3 +22,11 @@ files that have a struct inside of them which will be used to store cordinates a
 - [ ] Control robot with Libraries using IR and Gyro and maybe with encoders (turns, avoidance etc.)
 - [ ] Work on solving a maze
 - [ ] Debug and optimize anything that can be improved on
+
+
+
+<h3>FAQ</h3>
+<b><i>Why do you not erase the obsolete folders?</i></b>
+
+The folders are kept so you can see how we ended up with the main Library, the code will be removed eventually.
+
