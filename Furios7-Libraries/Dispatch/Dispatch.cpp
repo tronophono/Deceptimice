@@ -11,43 +11,28 @@
  *		the analog values of the sensor.
  */
 
-
 #include "Dispatch.h"
-
-/*	Since these variables are declared as part of the class in Dispatch.h you do not need to initiate them again
- * but are kept here for reference.
- *
- *	int irValues[3];
- *	int gyroReading;
- *	int calibrateArray[3];
- *	int irArray[3][2];
- */
 
 /*This is the constructor, it is code that will be executed when you make an object in C++.
  * In this case we are setting up the IR sensors.
-*/
-Dispatch::Dispatch(int front_ir, int left_ir, int right_ir, int front_in,
-		int left_in, int right_in) {
+ */
 
-	pinMode(front_ir, OUTPUT);
-	pinMode(left_ir, OUTPUT);
-	pinMode(right_ir, OUTPUT);
+
+
+Dispatch::Dispatch(int front_in, int left_in, int right_in) {
 
 	pinMode(front_in, INPUT);
 	pinMode(left_in, INPUT);
 	pinMode(right_in, INPUT);
 
-	irArray[0][0] = front_ir;
-	irArray[0][1] = front_in;
-	irArray[1][0] = left_ir;
-	irArray[1][1] = left_in;
-	irArray[2][0] = right_ir;
-	irArray[2][1] = right_in;
+	irArray[0] = front_in;
+	irArray[1] = left_in;
+	irArray[2] = right_in;
 }
 
 //This function has not been tested, but it is there until there is a need for it.
-void Dispatch::readSensor(int y, int x) {
-	int returnVal = analogRead(irArray[y][x]);
+void Dispatch::readSensor(int y,int x) {
+	int returnVal = analogRead(irArray[y]);
 	irValues[Dispatch::mapCoords(y, x)] = returnVal;
 }
 
@@ -68,7 +53,6 @@ int Dispatch::mapCoords(int y, int x) {
 void Dispatch::powerUp(int ledPin) {
 	digitalWrite(ledPin, HIGH);
 }
-
 
 void Dispatch::powerDown(int ledPin) {
 	digitalWrite(ledPin, LOW);
@@ -102,15 +86,13 @@ int Dispatch::getValue(int index) {
 void Dispatch::calibrateSensors() {
 	for (int i = 0; i < 3; i++) {
 		for (int j = i; j < 3; j++) {
-			calibratedArray[Dispatch::mapCoords(i, j)] = Dispatch::getAverage(
-					irArray[i][0], i, j);
+			calibratedArray[Dispatch::mapCoords(i, j)] = Dispatch::getAverage(irArray[i], i, j);
 		}
 	}
 }
 
-//Temporary function to read raw values of sensor, it returs a value so make sure to have it stored in another variable
-long int Dispatch::rawData(int ledPin)
-{
+//Temporary function to read raw values of sensor, it returns a value so make sure to have it stored in another variable
+long int Dispatch::rawData(int ledPin) {
 	long int value = analogRead(ledPin);
 	return value;
 }

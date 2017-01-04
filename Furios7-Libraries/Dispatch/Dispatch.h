@@ -26,11 +26,12 @@
  */
 
 //	The next two lines is just to make sure that the inclusion of the code is no repeated when being compiled
+
 #ifndef FURIOS7_LIBRARIES_DISPATCH_DISPATCH_H_
 #define FURIOS7_LIBRARIES_DISPATCH_DISPATCH_H_
 
 // Here we include the Arduino library, in the arduino ide it is included automatically. I use eclipse so I include it.
-#include "Arduino.h"
+//#include "Arduino.h"
 
 /*	Here we include the gyro library, you basically copy the folder path in which the file is at
  *
@@ -42,7 +43,7 @@
  *	 Instead of the long mess that I have
  *
  */
-
+#include "Arduino.h"
 #include "/home/lasantos/Desktop/Micromouse/Furios7-Micromouse/Furios7-Libraries/GyroAccel/GyroAccel.h"
 
 //Here is where we create the class Dispatch and provide the functions that will go with it.
@@ -52,12 +53,10 @@ public:
 	/*This is called a constructor, it is like a default functions that happens by default, I usually use them to set up the object,
 	 * in this case the constructor will assign the pin number given to it in the following order.
 	 */
-	Dispatch(int front_ir, int left_ir, int right_ir, int front_in, int left_in,
-			int right_in);
+	Dispatch(int front_in, int left_in, int right_in);
 
-	//Variables that come with the class
 	GyroAccel gyro;
-	int irArray[3][2];
+	int irArray[3];
 	int calibratedArray[3];
 	int irValues[3];
 	float gyroVal = 0;
