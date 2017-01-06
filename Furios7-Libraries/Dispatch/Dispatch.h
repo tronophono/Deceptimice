@@ -74,6 +74,7 @@ public:
 
 	void setGyro(double gyroReading);
 	long int rawData(int ledPin);
+	void gyroPrint();
 
 };
 

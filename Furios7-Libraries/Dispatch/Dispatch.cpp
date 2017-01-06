@@ -17,8 +17,6 @@
  * In this case we are setting up the IR sensors.
  */
 
-
-
 Dispatch::Dispatch(int front_in, int left_in, int right_in) {
 
 	pinMode(front_in, INPUT);
@@ -31,7 +29,7 @@ Dispatch::Dispatch(int front_in, int left_in, int right_in) {
 }
 
 //This function has not been tested, but it is there until there is a need for it.
-void Dispatch::readSensor(int y,int x) {
+void Dispatch::readSensor(int y, int x) {
 	int returnVal = analogRead(irArray[y]);
 	irValues[Dispatch::mapCoords(y, x)] = returnVal;
 }
@@ -86,14 +84,26 @@ int Dispatch::getValue(int index) {
 void Dispatch::calibrateSensors() {
 	for (int i = 0; i < 3; i++) {
 		for (int j = i; j < 3; j++) {
-			calibratedArray[Dispatch::mapCoords(i, j)] = Dispatch::getAverage(irArray[i], i, j);
+			calibratedArray[Dispatch::mapCoords(i, j)] = Dispatch::getAverage(
+					irArray[i], i, j);
 		}
 	}
 }
 
 //Temporary function to read raw values of sensor, it returns a value so make sure to have it stored in another variable
 long int Dispatch::rawData(int ledPin) {
-	long int value = analogRead(ledPin);
+	long value = analogRead(ledPin);
 	return value;
 }
+
+
+
+void Dispatch::gyroPrint()
+{
+	gyro.recordGyroRegisters();
+	gyro.printgyro();
+}
+
+
+
 
