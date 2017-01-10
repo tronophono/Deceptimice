@@ -21,12 +21,10 @@
  *
  */
 
-
-
-
 #include "GyroAccel.h"
 #include "Arduino.h"
-#include <Wire.h>	//used for I2C (I squared C), a communication protocol like bluetooth.
+#include <Wire.h>
+	//used for I2C (I squared C), a communication protocol like bluetooth.
 
 //variables to store the values from the MPU.
 long accelX = 0;
@@ -51,7 +49,6 @@ float average = 0;
  * 		GyroAccel gyro; //this sets up the device automatically because the constructor is executed even without a parameter
  */
 GyroAccel::GyroAccel(void) {
-
 	Wire.beginTransmission(0b1101000); //This is the I2C address of the MPU (b1101000/b1101001 for AC0 low/high datasheet sec. 9.2)
 	Wire.write(0x6B); //Accessing the register 6B - Power Management (Sec. 4.28)
 	Wire.write(0b00000000); //Setting SLEEP register to 0. (Required; see Note on p. 9)
@@ -67,8 +64,9 @@ GyroAccel::GyroAccel(void) {
 
 }
 
+
 //functions to read accelerometer values
-void GyroAccel::recordAccelRegisters() {
+void GyroAccel::recordAccelRegisters(void) {
 	Wire.beginTransmission(0b1101000); //I2C address of the MPU
 	Wire.write(0x3B); //Starting register for Accel Readings
 	Wire.endTransmission();
@@ -84,7 +82,7 @@ void GyroAccel::recordAccelRegisters() {
 }
 
 //read gyroscope's values
-void GyroAccel::recordGyroRegisters() {
+void GyroAccel::recordGyroRegisters(void) {
 	Wire.beginTransmission(0b1101000); //I2C address of the MPU
 	Wire.write(0x43); //Starting register for Gyro Readings
 	Wire.endTransmission();
@@ -106,7 +104,7 @@ void GyroAccel::recordGyroRegisters() {
 }
 
 //print the values of the gyroscope using Serial, which is used to communicate with our computer
-void GyroAccel::printgyro() {
+void GyroAccel::printgyro(void) {
 	Serial.print(" Gyro (deg)");
 	Serial.print(" X=");
 	Serial.print(rotX);
@@ -122,7 +120,7 @@ void GyroAccel::printgyro() {
 }
 
 //print the values of the gyroscope.
-void GyroAccel::printaccel() {
+void GyroAccel::printaccel(void) {
 	Serial.print(" gForceX=");
 	Serial.print(gForceX);
 	Serial.print(" gForceY=");

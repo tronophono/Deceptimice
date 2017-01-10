@@ -12,6 +12,7 @@
  */
 
 #include "Dispatch.h"
+#include "Arduino.h"
 
 /*This is the constructor, it is code that will be executed when you make an object in C++.
  * In this case we are setting up the IR sensors.
