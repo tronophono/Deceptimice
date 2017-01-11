@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef FURIOS7_LIBRARIES_GYROACCEL_GYROACCEL_H_
-#define FURIOS7_LIBRARIES_GYROACCEL_GYROACCEL_H_
+#ifndef GYROACCEL_H_
+#define GYROACCEL_H_
 #include "Arduino.h"
 #include <Wire.h>
 class GyroAccel {

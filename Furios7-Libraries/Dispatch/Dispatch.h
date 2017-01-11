@@ -27,8 +27,8 @@
 
 //	The next two lines is just to make sure that the inclusion of the code is no repeated when being compiled
 
-#ifndef FURIOS7_LIBRARIES_DISPATCH_DISPATCH_H_
-#define FURIOS7_LIBRARIES_DISPATCH_DISPATCH_H_
+#ifndef DISPATCH_H_
+#define DISPATCH_H_
 
 // Here we include the Arduino library, in the arduino ide it is included automatically. I use eclipse so I include it.
 //#include "Arduino.h"
@@ -44,7 +44,7 @@
  *
  */
 #include "Arduino.h"
-#include "/home/lasantos/Desktop/Micromouse/Furios7-Micromouse/Furios7-Libraries/GyroAccel/GyroAccel.h"
+#include "GyroAccel.h"
 
 //Here is where we create the class Dispatch and provide the functions that will go with it.
 class Dispatch {
@@ -53,29 +53,24 @@ public:
 	/*This is called a constructor, it is like a default functions that happens by default, I usually use them to set up the object,
 	 * in this case the constructor will assign the pin number given to it in the following order.
 	 */
-	Dispatch(int front_in, int left_in, int right_in);
+	Dispatch(byte front_in, byte left_in, byte right_in);
 
-	GyroAccel gyro;
-	int irArray[3];
-	int calibratedArray[3];
-	int irValues[3];
-	float gyroVal = 0;
+	boolean	Averagestate=false;
+	long int IR_leftavg=0;
+	long int IR_rightavg=0;
+	long int IR_middleavg=0;
+	int MiddleWallPoint=20;
+	byte state_mid = 0;
+	byte state_left = 0;
+	byte state_right = 0;
 
 
-	//Functions of the class
-	void readSensor(int y, int x);
-	void powerUp(int ledPin);
-	void powerDown(int ledPin);
-	void calibrateSensors();
-	int mapCoords(int y, int x);
-	int getValue(int index);
 
-	int getAverage(int ledPin, int y, int x);
 
-	void setGyro(double gyroReading);
-	long int rawData(int ledPin);
-	void gyroPrint();
-
+	void AverageTolly();
+	void CheckFront();
+	void CheckSides();
+	void RawValues();
 };
 
 #endif /* FURIOS7_LIBRARIES_DISPATCH_DISPATCH_H_ */

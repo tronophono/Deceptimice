@@ -18,93 +18,98 @@
  * In this case we are setting up the IR sensors.
  */
 
-Dispatch::Dispatch(int front_in, int left_in, int right_in) {
+long int IR_leftavg = 0;
+long int IR_rightavg = 0;
+long int IR_middleavg = 0;
 
-	pinMode(front_in, INPUT);
-	pinMode(left_in, INPUT);
-	pinMode(right_in, INPUT);
+int irArray[3];
 
-	irArray[0] = front_in;
-	irArray[1] = left_in;
-	irArray[2] = right_in;
+Dispatch::Dispatch(byte front_in, byte left_in, byte right_in) {
+  //MiddelWallPoint = 20;
+
+  pinMode(front_in, INPUT);
+  pinMode(left_in, INPUT);
+  pinMode(right_in, INPUT);
+
+  irArray[0] = front_in;
+  irArray[1] = left_in;
+  irArray[2] = right_in;
 }
 
-//This function has not been tested, but it is there until there is a need for it.
-void Dispatch::readSensor(int y, int x) {
-	int returnVal = analogRead(irArray[y]);
-	irValues[Dispatch::mapCoords(y, x)] = returnVal;
+void Dispatch::AverageTolly() {
+
+  if (!Averagestate) {
+    int IR_left = 0;
+    int IR_right = 0;
+    int IR_middle = 0;
+    for (byte i = 0; i < 100; i++) {
+      IR_left += analogRead(A0);
+      IR_right += analogRead(A2);
+      IR_middle += analogRead(A1);
+    }
+
+    IR_leftavg = IR_left / 100;
+    IR_rightavg = IR_right / 100;
+    IR_middleavg = IR_middle / 100;
+
+    if (IR_leftavg != IR_rightavg and IR_leftavg != IR_middleavg) {
+      if (IR_rightavg != IR_leftavg) {
+        IR_rightavg = IR_leftavg;
+      }
+      if (IR_rightavg != IR_middleavg) {
+        IR_middleavg = IR_rightavg;
+      }
+    }
+  } else {
+    Serial.print("Average already taken");
+  }
 }
 
-//This function has not been tested, but it is there until there is a need for it.
-int Dispatch::mapCoords(int y, int x) {
-	int returnVal = 0;
-	if (y == 0) {
-		returnVal = x + y - 1;
-	} else if (y & 1) {
-		returnVal = x + y;
-	} else if (y & 2) {
-		returnVal = x + y + 1;
-	}
-	return returnVal;
+void Dispatch::CheckFront() {
+
+  byte IR_middle;
+  IR_middle = analogRead(irArray[0]);
+
+  if (IR_middle < MiddleWallPoint) {
+    Serial.println("There is a wall in the front");
+    state_mid = 1;
+  } else {
+    Serial.println("There is space in front");
+    state_mid = 0;
+
+  }
+
 }
 
-//This will power up the selected IR sensor, a simple digitalWrite.
-void Dispatch::powerUp(int ledPin) {
-	digitalWrite(ledPin, HIGH);
+void Dispatch::CheckSides() {
+  byte IR_left, IR_right;
+  IR_left = analogRead(irArray[1]);
+  IR_right = analogRead(irArray[2]);
+
+  if (IR_left > MiddleWallPoint) {
+    Serial.println("There is space at left");
+    state_left = 0;
+  } else {
+    Serial.println("There is a wall at left");
+    state_left = 1;
+  }
+
+  if (IR_right > MiddleWallPoint) {
+    Serial.println("There is a space at right");
+    state_right = 0;
+  } else {
+    Serial.println("There is a wall at right");
+    state_right = 1;
+  }
 }
 
-void Dispatch::powerDown(int ledPin) {
-	digitalWrite(ledPin, LOW);
+void Dispatch::RawValues() {
+  int rawValue;
+  for (int i = 0; i < 3; i++) {
+    rawValue = analogRead(irArray[i]);
+    Serial.print(i);
+    Serial.print(": ");
+    Serial.println(rawValue);
+  }
 }
-
-//gets an average reading of 1 sensor
-int Dispatch::getAverage(int ledPin, int y, int x) {
-	int runningTally = 0;
-	for (int a = 0; a < 10; a++) {
-		Dispatch::powerUp(ledPin);
-		delayMicroseconds(80);
-		Dispatch::readSensor(y, x);
-		runningTally += irValues[Dispatch::mapCoords(y, x)];
-		Dispatch::powerDown(ledPin);
-		delayMicroseconds(80);
-	}
-	int avgTally = runningTally / 10;
-	return avgTally;
-}
-
-//gets value that is stored on irValues array
-int Dispatch::getValue(int index) {
-	int value = irValues[index] - calibratedArray[index];
-	if (value < 0) {
-		value = 0;
-	}
-	return value;
-}
-
-//Used to calibrate sensors, yet to be tested
-void Dispatch::calibrateSensors() {
-	for (int i = 0; i < 3; i++) {
-		for (int j = i; j < 3; j++) {
-			calibratedArray[Dispatch::mapCoords(i, j)] = Dispatch::getAverage(
-					irArray[i], i, j);
-		}
-	}
-}
-
-//Temporary function to read raw values of sensor, it returns a value so make sure to have it stored in another variable
-long int Dispatch::rawData(int ledPin) {
-	long value = analogRead(ledPin);
-	return value;
-}
-
-
-
-void Dispatch::gyroPrint()
-{
-	gyro.recordGyroRegisters();
-	gyro.printgyro();
-}
-
-
-
 
