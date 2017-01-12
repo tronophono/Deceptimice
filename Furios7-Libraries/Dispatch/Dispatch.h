@@ -26,7 +26,6 @@
  */
 
 //	The next two lines is just to make sure that the inclusion of the code is no repeated when being compiled
-
 #ifndef DISPATCH_H_
 #define DISPATCH_H_
 
@@ -48,29 +47,26 @@
 
 //Here is where we create the class Dispatch and provide the functions that will go with it.
 class Dispatch {
-public:
+ public:
 
-	/*This is called a constructor, it is like a default functions that happens by default, I usually use them to set up the object,
-	 * in this case the constructor will assign the pin number given to it in the following order.
-	 */
-	Dispatch(byte front_in, byte left_in, byte right_in);
+  /*This is called a constructor, it is like a default functions that happens by default, I usually use them to set up the object,
+   * in this case the constructor will assign the pin number given to it in the following order.
+   */
+  Dispatch(byte front_in, byte left_in, byte right_in);
 
-	boolean	Averagestate=false;
-	long int IR_leftavg=0;
-	long int IR_rightavg=0;
-	long int IR_middleavg=0;
-	int MiddleWallPoint=20;
-	byte state_mid = 0;
-	byte state_left = 0;
-	byte state_right = 0;
+  boolean Averagestate = false;
+  long int IR_leftavg = 0;
+  long int IR_rightavg = 0;
+  long int IR_middleavg = 0;
+  int MiddleWallPoint = 20;
+  byte state_mid = 0;
+  byte state_left = 0;
+  byte state_right = 0;
 
-
-
-
-	void AverageTolly();
-	void CheckFront();
-	void CheckSides();
-	void RawValues();
+  void AverageTolly();
+  void CheckFront();
+  void CheckSides();
+  void RawValues();
 };
 
 #endif /* FURIOS7_LIBRARIES_DISPATCH_DISPATCH_H_ */

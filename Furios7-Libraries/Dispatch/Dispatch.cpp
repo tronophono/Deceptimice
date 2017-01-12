@@ -63,6 +63,8 @@ void Dispatch::AverageTolly() {
   } else {
     Serial.print("Average already taken");
   }
+
+  Averagestate=true;
 }
 
 void Dispatch::CheckFront() {
