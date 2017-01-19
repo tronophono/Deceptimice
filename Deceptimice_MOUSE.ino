@@ -1,13 +1,37 @@
 #include "Arduino.h"
 #include "Dispatch.h"
-byte left = A0;
-byte right = A2;
-byte front = A1;
+#include "Motors.h"
+#include "GyroAccel.h"
+#include "encoder.h"
+//#include "EnableInterrupt.h"
+
+byte MOTOR1P1=11;
+byte MOTOR1P2=6;
+byte MOTOR2P1=10;
+byte MOTOR2P2=8;
+byte enablePin1=12;
+byte enablePin2=7;
+
+
+byte left = A1;
+byte right = A3;
+byte front = A2;
 
 Dispatch IR(front, left, right);
+Motors wheels(MOTOR1P1,MOTOR1P2,MOTOR2P1,MOTOR2P2,enablePin1,enablePin2);
+GyroAccel gyro;
 
 //0-forward, 1-turnleft,2-turnright, 3-all sided blocked
 byte directionState = 0;
+
+
+byte buttonPin=13;
+
+boolean button_state=false;
+
+
+
+double angleX;
 
 void setup() {
 
@@ -15,15 +39,21 @@ void setup() {
   while (millis() != 1000)
     ;
   while (IR.Averagestate == false) {
-    Serial.print("IR Calibrated");
     IR.AverageTolly();
+    if(IR.Averagestate == true)
+    {
+      Serial.print("IR Calibrated");
+    }
   }
+
+  encoder_ReadRight(2,3);
+  encoder_ReadLeft(4,5);
+  gyro.setup();
 
 }
 
+
 void loop() {
-  Serial.print(IR.IR_middleavg);
-  delay(1000);
 }
 
 void checkingStates() {

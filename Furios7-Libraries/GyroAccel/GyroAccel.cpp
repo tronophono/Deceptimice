@@ -49,7 +49,6 @@ float average = 0;
  * 		GyroAccel gyro; //this sets up the device automatically because the constructor is executed even without a parameter
  */
 GyroAccel::GyroAccel(void) {
-  Serial.print("Gyro Beginning");
 
 }
 

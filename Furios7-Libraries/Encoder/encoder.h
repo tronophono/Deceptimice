@@ -5,9 +5,10 @@
  *      Author: lasantos
  */
 
+
 #ifndef ENCODER_H_
 #define ENCODER_H_
-//#include "Arduino.h"
+#include "Arduino.h"
 //#include "EnableInterrupt.h"
 
 void encoder_ReadRight(int encoder0PA, int encoder0PB);
