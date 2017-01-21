@@ -55,10 +55,10 @@ class Dispatch {
   Dispatch(byte front_in, byte left_in, byte right_in);
 
   boolean Averagestate = false;
-  long int IR_leftavg = 0;
+  unsigned int IR_leftavg = 0;
   long int IR_rightavg = 0;
   long int IR_middleavg = 0;
-  int MiddleWallPoint = 20;
+  int MiddleWallPoint = 995;
   byte state_mid = 0;
   byte state_left = 0;
   byte state_right = 0;

@@ -3,6 +3,7 @@
 #include "Motors.h"
 #include "GyroAccel.h"
 #include "encoder.h"
+#include "math.h"
 //#include "EnableInterrupt.h"
 
 byte MOTOR1P1 = 11;
@@ -37,7 +38,7 @@ void setup() {
   while (IR.Averagestate == false) {
     IR.AverageTolly();
     if (IR.Averagestate == true) {
-      Serial.print("IR Calibrated");
+//      Serial.print("IR Calibrated");
     }
   }
 
@@ -48,42 +49,56 @@ void setup() {
 }
 
 void loop() {
+   IR.CheckFront();
+   if (IR.state_mid != 1) {
+   wheels.forward();
+   } else {
+   wheels.stop_it();
+   IR.CheckSides();
+   checkingStates();
+   }
 
-  IR.CheckFront();
-  if (IR.state_mid != 1) {
-    wheels.forward();
-  } else {
-    wheels.stop_it();
-    IR.CheckSides();
-    checkingStates();
-  }
 
+  //wheels.right_turn();
 }
 
 void checkingStates() {
   if (IR.state_left and IR.state_mid) {
     directionState = 2;
     gyro.recordGyroRegisters();
-    while (gyro.rotZ != 100) {
+    while (abs(gyro.angle) <= 75) {
       wheels.right_turn();
+      gyro.recordGyroRegisters();
     }
+    gyro.angle = 0;
     wheels.stop_it();
-    Serial.println("	Turning Right		");
+    //Serial.println("	Turning Right		");
   } else if (IR.state_left and IR.state_right and not IR.state_mid) {
     directionState = 0;
     wheels.forward();
-    Serial.println("			Going Forward		");
+    //Serial.println("			Going Forward		");
   } else if (IR.state_mid and IR.state_right) {
     directionState = 1;
-    while (gyro.rotZ != 100) {
+    while (abs(gyro.angle) <= 75) {
       wheels.left_turn();
+      gyro.recordGyroRegisters();
     }
+    gyro.angle = 0;
     wheels.stop_it();
-    Serial.println("         Turning left    ");
+    //Serial.println("         Turning left    ");
   } else if (IR.state_mid and IR.state_left and IR.state_right) {
     directionState = 3;
     wheels.stop_it();
-    Serial.println("           Stopping   ");
+    //Serial.println("           Stopping   ");
+  }
+  if (IR.state_mid) {
+    gyro.recordGyroRegisters();
+    while (abs(gyro.angle) != 85) {
+      wheels.left_turn();
+      gyro.recordGyroRegisters();
+    }
+    gyro.angle = 0;
+    wheels.stop_it();
   }
 }
 

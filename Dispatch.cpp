@@ -39,9 +39,9 @@ Dispatch::Dispatch(byte front_in, byte left_in, byte right_in) {
 void Dispatch::AverageTolly() {
 
   if (!Averagestate) {
-    int IR_left = 0;
-    int IR_right = 0;
-    int IR_middle = 0;
+    unsigned int IR_left = 0;
+    unsigned int IR_right = 0;
+    unsigned int IR_middle = 0;
     for (byte i = 0; i < 100; i++) {
       IR_left += analogRead(A0);
       IR_right += analogRead(A2);
@@ -61,7 +61,7 @@ void Dispatch::AverageTolly() {
       }
     }
   } else {
-    Serial.print("Average already taken");
+  //  Serial.print("Average already taken");
   }
 
   Averagestate=true;
@@ -69,14 +69,14 @@ void Dispatch::AverageTolly() {
 
 void Dispatch::CheckFront() {
 
-  byte IR_middle;
+  unsigned int IR_middle;
   IR_middle = analogRead(irArray[0]);
 
-  if (IR_middle < MiddleWallPoint) {
-    Serial.println("There is a wall in the front");
+  if (IR_middle >= MiddleWallPoint) {
+ //   Serial.println("There is a wall in the front");
     state_mid = 1;
   } else {
-    Serial.println("There is space in front");
+ //   Serial.println("There is space in front");
     state_mid = 0;
 
   }
@@ -84,34 +84,39 @@ void Dispatch::CheckFront() {
 }
 
 void Dispatch::CheckSides() {
-  byte IR_left, IR_right;
+  unsigned int IR_left, IR_right;
   IR_left = analogRead(irArray[1]);
   IR_right = analogRead(irArray[2]);
 
-  if (IR_left > MiddleWallPoint) {
-    Serial.println("There is space at left");
-    state_left = 0;
-  } else {
-    Serial.println("There is a wall at left");
+  if (IR_left >= MiddleWallPoint) {
+//    Serial.println("There is a wall at left");
     state_left = 1;
+  } else {
+//    Serial.println("There is space at left");
+    state_left = 0;
   }
 
-  if (IR_right > MiddleWallPoint) {
-    Serial.println("There is a space at right");
-    state_right = 0;
-  } else {
-    Serial.println("There is a wall at right");
+  if (IR_right >= MiddleWallPoint) {
+ //   Serial.println("There is a wall at right");
     state_right = 1;
+  } else {
+  //  Serial.println("There is a space at right");
+    state_right = 0;
   }
 }
 
 void Dispatch::RawValues() {
-  int rawValue;
-  for (int i = 0; i < 3; i++) {
-    rawValue = analogRead(irArray[i]);
-    Serial.print(i);
-    Serial.print(": ");
-    Serial.println(rawValue);
-  }
+  unsigned long int front;
+  unsigned long int left;
+  unsigned long int right;
+
+  front = analogRead(irArray[0]);
+  left = analogRead(irArray[1]);
+  right = analogRead(irArray[2]);
+
+  Serial.print("Front: ");
+  Serial.print(front);
+  Serial.print("   Left: ");Serial.print(left);
+  Serial.print("   Right: ");Serial.println(right);
 }
 

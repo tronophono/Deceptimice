@@ -33,38 +33,38 @@ Motors::Motors(int motor1p1, int motor1p2, int motor2p1, int motor2p2,
 
 void Motors::right_turn() {
   analogWrite(motor1Pin1, 0);
-  analogWrite(motor1Pin2, 255);
+  analogWrite(motor1Pin2, 80); // left wheel work
 
-  analogWrite(motor2Pin1, 0);
-  analogWrite(motor2Pin2, 255);
-  Serial.println("Turning right");
+  analogWrite(motor2Pin1, 0); // right wheen no work
+  analogWrite(motor2Pin2, 75);
+  //Serial.println("Turning right");
 }
 
 void Motors::left_turn() {
-  analogWrite(motor1Pin1, 128);
+  analogWrite(motor1Pin1, 80); // left wheel = no work
   analogWrite(motor1Pin2, 0);
 
-  analogWrite(motor2Pin1, 255);
+  analogWrite(motor2Pin1, 75); //right wheel = works
   analogWrite(motor2Pin2, 0);
-  Serial.println("Turning left");
+ // Serial.println("Turning left");
 }
 
 void Motors::forward() {
   analogWrite(motor1Pin1, 0);
-  analogWrite(motor1Pin2, 200);
+  analogWrite(motor1Pin2, 80);
 
-  analogWrite(motor2Pin1, 200);
+  analogWrite(motor2Pin1, 75);
   analogWrite(motor2Pin2, 0);
-  Serial.println("Moving Forward");
+ // Serial.println("Moving Forward");
 }
 
 void Motors::backward() {
-  analogWrite(motor1Pin1, 150);
+  analogWrite(motor1Pin1, 80); //no work
   analogWrite(motor1Pin2, 0);
 
   analogWrite(motor2Pin1, 0);
-  analogWrite(motor2Pin2, 150);
-  Serial.println("Moving Backwards");
+  analogWrite(motor2Pin2, 75); //no work
+  //Serial.println("Moving Backwards");
 }
 
 void Motors::stop_it() {
@@ -73,5 +73,5 @@ void Motors::stop_it() {
 
   analogWrite(motor2Pin1, 0);
   analogWrite(motor2Pin2, 0);
-  Serial.println("Stopping");
+  //Serial.println("Stopping");
 }
