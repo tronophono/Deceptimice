@@ -31,6 +31,8 @@ void setup() {
 
   Serial.begin(9600);
 
+
+
   encoder_ReadRight(2, 3);
   encoder_ReadLeft(4, 5);
   gyro.setup();
@@ -41,24 +43,28 @@ void setup() {
 
 void loop() {
 
-  IR.CheckFront();
-  if (IR.state_mid != 1) {
+  if (analogRead(IR.irArray[0]) < 1000) {
     wheels.forward(200, 140);
   } else {
+
     wheels.stop_it();
+    IR.CheckFront();
     IR.CheckSides();
     checkingStates();
   }
 
-  while (analogRead(IR.irArray[1]) > IR.MiddleWallPoint) {
-    wheels.right_turn(180, 0);
+  while (analogRead(IR.irArray[1]) > 1000) {
+    wheels.right_turn(200, 0);
   }
-  while (analogRead(IR.irArray[2]) > IR.MiddleWallPoint) {
-    wheels.left_turn(0, 128);
+  while (analogRead(IR.irArray[2]) > 1000) {
+    wheels.left_turn(0, 250);
   }
+
 }
 
 void checkingStates() {
+  encoder0PosRight = 0;
+  encoder0PosLeft = 0;
   if (IR.state_left and IR.state_mid) {
     while (abs(encoder0PosRight) <= 200 and abs(encoder0PosLeft) <= 200) {
       wheels.right_turn(200, 140);
@@ -78,15 +84,27 @@ void checkingStates() {
   } else if (IR.state_mid and IR.state_left and IR.state_right) {
     wheels.stop_it();
     //Serial.println("           Stopping   ");
-  }
-  if (IR.state_mid) {
+  } else if (IR.state_mid) {
     while (abs(encoder0PosRight) <= 200 and abs(encoder0PosLeft) <= 200) {
       wheels.right_turn(200, 140);
     }
     wheels.stop_it();
     encoder0PosRight = 0;
     encoder0PosLeft = 0;
+  } else if (IR.state_mid and IR.state_left and IR.state_right) {
+    while (abs(encoder0PosRight) <= 400 and abs(encoder0PosLeft) <= 400) {
+      wheels.left_turn(200, 140);
+    }
+    wheels.stop_it();
+    encoder0PosRight = 0;
+    encoder0PosLeft = 0;
+
   }
+
+  IR.state_left = 0;
+  IR.state_mid = 0;
+  IR.state_right = 0;
+
 }
 
 //Code for Encoders
