@@ -62,7 +62,7 @@ class Dispatch {
   byte state_mid = 0;
   byte state_left = 0;
   byte state_right = 0;
-
+  int irArray[3];
   void AverageTolly();
   void CheckFront();
   void CheckSides();
