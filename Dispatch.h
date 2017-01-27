@@ -58,7 +58,7 @@ class Dispatch {
   unsigned int IR_leftavg = 0;
   long int IR_rightavg = 0;
   long int IR_middleavg = 0;
-  int MiddleWallPoint = 980;
+  int MiddleWallPoint = 985;
   byte state_mid = 0;
   byte state_left = 0;
   byte state_right = 0;

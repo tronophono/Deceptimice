@@ -61,22 +61,22 @@ void Dispatch::AverageTolly() {
       }
     }
   } else {
-  //  Serial.print("Average already taken");
+    //  Serial.print("Average already taken");
   }
 
-  Averagestate=true;
+  Averagestate = true;
 }
 
 void Dispatch::CheckFront() {
 
-  unsigned int IR_middle;
+  int IR_middle;
   IR_middle = analogRead(irArray[0]);
 
   if (IR_middle >= MiddleWallPoint) {
- //   Serial.println("There is a wall in the front");
+    //   Serial.println("There is a wall in the front");
     state_mid = 1;
   } else {
- //   Serial.println("There is space in front");
+    //   Serial.println("There is space in front");
     state_mid = 0;
 
   }
@@ -84,7 +84,7 @@ void Dispatch::CheckFront() {
 }
 
 void Dispatch::CheckSides() {
-  unsigned int IR_left, IR_right;
+  int IR_left, IR_right;
   IR_left = analogRead(irArray[1]);
   IR_right = analogRead(irArray[2]);
 
@@ -97,10 +97,10 @@ void Dispatch::CheckSides() {
   }
 
   if (IR_right >= MiddleWallPoint) {
- //   Serial.println("There is a wall at right");
+    //   Serial.println("There is a wall at right");
     state_right = 1;
   } else {
-  //  Serial.println("There is a space at right");
+    //  Serial.println("There is a space at right");
     state_right = 0;
   }
 }
@@ -116,7 +116,9 @@ void Dispatch::RawValues() {
 
   Serial.print("Front: ");
   Serial.print(front);
-  Serial.print("   Left: ");Serial.print(left);
-  Serial.print("   Right: ");Serial.println(right);
+  Serial.print("   Left: ");
+  Serial.print(left);
+  Serial.print("   Right: ");
+  Serial.println(right);
 }
 

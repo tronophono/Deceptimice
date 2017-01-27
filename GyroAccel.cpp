@@ -39,7 +39,7 @@ float gForceZ = 0;
 float rotX = 0;
 float rotY = 0;
 float rotZ = 0;
-float angle = 0;
+float anglez = 0;
 float average = 0;
 
 /*This constructor will set up the MPU device.
