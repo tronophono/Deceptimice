@@ -32,8 +32,6 @@ void setup() {
 
   Serial.begin(9600);
 
-
-
   encoder_ReadRight(2, 3);
   encoder_ReadLeft(4, 5);
   gyro.setup();
