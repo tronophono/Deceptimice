@@ -3,7 +3,10 @@
 #include "Motors.h"
 #include "GyroAccel.h"
 #include "EnableInterrupt.h"
-//#include "EnableInterrupt.h"
+
+/*
+ * This is a implementation of all the code written into an arduino project. Here is where all the work comes together.
+ */
 int rotDeg = 232;
 byte start = 0;
 byte MOTOR1P1 = 11;
@@ -152,7 +155,9 @@ void checkingStates() {
 
 }
 
-//Code for Encoders
+/*
+ * We added all the encoded code down here becuase we had some difficulty using it as a seperate header file.
+ */
 
 void doEncoderRightA() {
 
@@ -257,7 +262,7 @@ void doEncoderLeftB() {
 }
 
 void encoder_ReadRight(int encoder0PA, int encoder0PB) {
-//realtime signal processing
+//real time signal processing
   encoder0PinA = encoder0PA;
   encoder0PinB = encoder0PB;
   pinMode(encoder0PinA, INPUT);
