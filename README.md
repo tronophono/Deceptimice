@@ -24,3 +24,7 @@ The folders are kept so you can see how we ended up with the main Library, the c
 <b><i>How do you make it build?</i></b>
 
 The easiest way is to copy and paste all the files inside the folders in the <b>Furios7-Libraries</b> in the same folder/directory where <b>Deceptimice_MOUSE.ino</b> is located at.
+
+
+
+<b><h1><i>This repository has not been updated for a while, any use of these libraries should be used to the best of your judgement.</i></h1></b>
